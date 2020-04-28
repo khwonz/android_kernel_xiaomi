@@ -389,11 +389,15 @@ static int msm_pcm_playback_prepare(struct snd_pcm_substream *substream)
 		}
 	} else {
 
+
 #if (1)
 		ret = q6asm_open_write_v3(prtd->audio_client,
 			fmt_type, bits_per_sample);
 #else
-		if (q6core_get_avcs_api_version_per_service(
+		if (q6core_get_avs_version() < Q6_SUBSYS_AVS2_8)
+			ret = q6asm_open_write_v3(prtd->audio_client,
+				fmt_type, bits_per_sample);
+		else if (q6core_get_avcs_api_version_per_service(
 				APRV2_IDS_SERVICE_ID_ADSP_ASM_V) >=
 				ADSP_ASM_API_VERSION_V2)
 			ret = q6asm_open_write_v5(prtd->audio_client,
@@ -401,7 +405,6 @@ static int msm_pcm_playback_prepare(struct snd_pcm_substream *substream)
 		else
 			ret = q6asm_open_write_v4(prtd->audio_client,
 				fmt_type, bits_per_sample);
-#endif
 
 		if (ret < 0) {
 			pr_err("%s: q6asm_open_write failed (%d)\n",
@@ -443,12 +446,14 @@ static int msm_pcm_playback_prepare(struct snd_pcm_substream *substream)
 	} else {
 #if (1)
 		ret = q6asm_media_format_block_multi_ch_pcm_v3(
+
+		if (q6core_get_avs_version() < Q6_SUBSYS_AVS2_8) {
+			ret = q6asm_media_format_block_multi_ch_pcm_v3(
 				prtd->audio_client, runtime->rate,
 				runtime->channels, !prtd->set_channel_map,
 				prtd->channel_map, bits_per_sample,
 				sample_word_size);
-#else
-		if (q6core_get_avcs_api_version_per_service(
+		} else if (q6core_get_avcs_api_version_per_service(
 				APRV2_IDS_SERVICE_ID_ADSP_ASM_V) >=
 				ADSP_ASM_API_VERSION_V2) {
 
@@ -466,7 +471,6 @@ static int msm_pcm_playback_prepare(struct snd_pcm_substream *substream)
 				sample_word_size, ASM_LITTLE_ENDIAN,
 				DEFAULT_QF);
 		}
-#endif
 	}
 	if (ret < 0)
 		pr_info("%s: CMD Format block failed\n", __func__);
@@ -527,9 +531,13 @@ static int msm_pcm_capture_prepare(struct snd_pcm_substream *substream)
 
 #if (1)
 		ret = q6asm_open_read_v3(prtd->audio_client, FORMAT_LINEAR_PCM,
+
+		if (q6core_get_avs_version() < Q6_SUBSYS_AVS2_8)
+			ret = q6asm_open_read_v3(prtd->audio_client,
+				FORMAT_LINEAR_PCM,
+
 				bits_per_sample);
-#else
-		if (q6core_get_avcs_api_version_per_service(
+		else if (q6core_get_avcs_api_version_per_service(
 				APRV2_IDS_SERVICE_ID_ADSP_ASM_V) >=
 				ADSP_ASM_API_VERSION_V2)
 			ret = q6asm_open_read_v5(prtd->audio_client,
@@ -539,7 +547,6 @@ static int msm_pcm_capture_prepare(struct snd_pcm_substream *substream)
 			ret = q6asm_open_read_v4(prtd->audio_client,
 				FORMAT_LINEAR_PCM,
 				bits_per_sample, false);
-#endif
 		if (ret < 0) {
 			pr_err("%s: q6asm_open_read failed\n", __func__);
 			q6asm_audio_client_free(prtd->audio_client);
@@ -606,6 +613,7 @@ static int msm_pcm_capture_prepare(struct snd_pcm_substream *substream)
 	pr_debug("%s: Samp_rate = %d Channel = %d bit width = %d, word size = %d\n",
 			__func__, prtd->samp_rate, prtd->channel_mode,
 			bits_per_sample, sample_word_size);
+
 #if (1)
 	ret = q6asm_enc_cfg_blk_pcm_format_support_v3(prtd->audio_client,
 					      prtd->samp_rate,
@@ -613,7 +621,17 @@ static int msm_pcm_capture_prepare(struct snd_pcm_substream *substream)
 					      bits_per_sample,
 					      sample_word_size);
 #else
-	if (q6core_get_avcs_api_version_per_service(
+
+
+	if (q6core_get_avs_version() < Q6_SUBSYS_AVS2_8)
+		ret = q6asm_enc_cfg_blk_pcm_format_support_v3(
+						prtd->audio_client,
+						prtd->samp_rate,
+						prtd->channel_mode,
+						bits_per_sample,
+						sample_word_size);
+	else if (q6core_get_avcs_api_version_per_service(
+
 			APRV2_IDS_SERVICE_ID_ADSP_ASM_V) >=
 			ADSP_ASM_API_VERSION_V2)
 		ret = q6asm_enc_cfg_blk_pcm_format_support_v5(
@@ -633,7 +651,9 @@ static int msm_pcm_capture_prepare(struct snd_pcm_substream *substream)
 						sample_word_size,
 						ASM_LITTLE_ENDIAN,
 						DEFAULT_QF);
+
 #endif
+
 	if (ret < 0)
 		pr_debug("%s: cmd cfg pcm was block failed", __func__);
 

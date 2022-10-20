@@ -71,7 +71,7 @@
 		qcom,initial-pwrlevel = <6>;
 		tzone-names = "gpu0-usr", "gpu1-usr";
 
-		qcom,idle-timeout = <64>; //msecs
+		qcom,idle-timeout = <80>; //msecs
 		qcom,deep-nap-timeout = <100>; //msecs
 		qcom,strtstp-sleepwake;
 
@@ -127,9 +127,6 @@
 
 		/* Enable context aware freq. scaling */
 		qcom,enable-ca-jump;
-
-		/* To disable GPU wake up on touch event */
-		qcom,disable-wake-on-touch;
 
 		/* Context aware jump busy penalty in us */
 		qcom,ca-busy-penalty = <12000>;

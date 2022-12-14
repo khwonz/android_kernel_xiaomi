@@ -549,6 +549,7 @@ KBUILD_AFLAGS	+= $(CLANG_FLAGS)
 endif
 
 ifdef CONFIG_LLVM_POLLY
+ifeq ($(cc-name),clang)
 KBUILD_CFLAGS	+= -mllvm -polly \
 		   -mllvm -polly-run-dce \
 		   -mllvm -polly-run-inliner \
@@ -557,6 +558,7 @@ KBUILD_CFLAGS	+= -mllvm -polly \
 		   -mllvm -polly-detect-keep-going \
 		   -mllvm -polly-vectorizer=stripmine \
 		   -mllvm -polly-invariant-load-hoisting
+endif
 endif
 
 ifeq ($(mixed-targets),1)

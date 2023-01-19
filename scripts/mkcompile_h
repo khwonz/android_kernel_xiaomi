@@ -45,7 +45,7 @@ fi
 
 LINUX_COMPILE_BY='Rsyd'
 
-LINUX_COMPILE_HOST='GreatRedSand-Sumeru'
+LINUX_COMPILE_HOST='DessertHandramaveth'
 
 UTS_VERSION="#$VERSION"
 CONFIG_FLAGS=""

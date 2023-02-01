@@ -658,12 +658,9 @@ static inline void cfqg_put(struct cfq_group *cfqg)
 #define cfq_log_cfqq(cfqd, cfqq, fmt, args...)	do {			\
 	\
 
-	if (likely(!blk_trace_note_message_enabled((bfqd)->queue)))	\
-		break;							\
-
 	if (likely(!blk_trace_note_message_enabled((cfqd)->queue)))	\
 		break;							\
-									\
+
 
 	blkg_path(cfqg_to_blkg((cfqq)->cfqg), __pbuf, sizeof(__pbuf));	\
 	blk_add_trace_msg((cfqd)->queue, "cfq%d%c%c %s " fmt, (cfqq)->pid, \

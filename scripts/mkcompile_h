@@ -45,7 +45,7 @@ fi
 
 LINUX_COMPILE_BY='Rsyd'
 
-LINUX_COMPILE_HOST='DessertHandramaveth'
+LINUX_COMPILE_HOST='HypostyleDessert'
 
 UTS_VERSION="#$VERSION"
 CONFIG_FLAGS=""

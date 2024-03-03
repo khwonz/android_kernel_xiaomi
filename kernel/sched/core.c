@@ -10200,10 +10200,7 @@ capacity_from_percent(char *buf)
 
 	buf = strim(buf);
 	if (strcmp(buf, "max")) {
-		req.ret = cgroup_parse_float(buf, UCLAMP_PERCENT_SHIFT,
-					     &req.percent);
-		if (req.ret)
-			return req;
+
 		if ((u64)req.percent > UCLAMP_PERCENT_SCALE) {
 			req.ret = -ERANGE;
 			return req;

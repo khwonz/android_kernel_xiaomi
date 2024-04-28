@@ -1470,7 +1470,8 @@ static int msm_release(struct inode *inode, struct file *filp)
 		kfree(node);
 	}
 
-	msm_preclose(dev, file_priv);
+
+msm_preclose(dev, file_priv);
 
        /**
 	* Handle preclose operation here for removing fb's whose

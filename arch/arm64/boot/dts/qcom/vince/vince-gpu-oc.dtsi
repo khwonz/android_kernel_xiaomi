@@ -44,7 +44,7 @@
 
 &msm_gpu {
 
-i
+
 	qcom,ca-target-pwrlevel = <4>;
 	qcom,initial-pwrlevel = <7>;
 	qcom,msm-bus,num-cases = <13>;

@@ -21,11 +21,11 @@ done
 DEFCONFIG="vince_defconfig"
 export KBUILD_BUILD_USER=Rsyd58
 export TZ=Asia/Jakarta
-export KBUILD_BUILD_HOST=android-10.0-q-build-kernel-root-eldhhcgo4uz
-export VER="V4.5.1.0.QEGMIXM"
-export KERNELDIR="/workspace/testyoo/krnlv"
+export KBUILD_BUILD_HOST=Azure
+export VER="V4.5.12.0.QEGIDXM"
+export KERNELDIR="/workspace/Rsyd58/krnlv"
 export USE_CCACHE=1
-export CCACHE_DIR="workspace/testyoo/.ccache"
+export CCACHE_DIR="workspace/Rsyd58/.ccache"
 export KERNELNAME="FurinaKernel"
 export SRCDIR="${KERNELDIR}"
 export OUTDIR="${KERNELDIR}/out"

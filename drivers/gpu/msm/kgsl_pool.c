@@ -1,5 +1,5 @@
 /* Copyright (c) 2016-2017, The Linux Foundation. All rights reserved.
- * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+ * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -93,7 +93,8 @@ _kgsl_pool_add_page(struct kgsl_page_pool *pool, struct page *p)
 		return;
 	}
 
-	 _kgsl_pool_zero_page(p, pool->pool_order);
+	_kgsl_pool_zero_page(p, pool->pool_order);
+
 
 	llist_add((struct llist_node *)&p->lru, &pool->page_list);
 	atomic_inc(&pool->page_count);

@@ -1,5 +1,5 @@
 
-/* Copyright (c) 2017-2018,2020 The Linux Foundation. All rights reserved.
+/* Copyright (c) 2017-2018,2020-2021, The Linux Foundation. All rights reserved.
  * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -244,42 +244,6 @@ static const struct {
 	{adreno_is_a630, a630_hwcg_regs, ARRAY_SIZE(a630_hwcg_regs)},
 	{adreno_is_a615, a615_hwcg_regs, ARRAY_SIZE(a615_hwcg_regs)},
 	{adreno_is_a616, a615_hwcg_regs, ARRAY_SIZE(a615_hwcg_regs)},
-};
-
-static struct a6xx_protected_regs {
-	unsigned int base;
-	unsigned int count;
-	int read_protect;
-} a6xx_protected_regs_group[] = {
-	{ 0x600, 0x51, 0 },
-	{ 0xAE50, 0x2, 1 },
-	{ 0x9624, 0x13, 1 },
-	{ 0x8630, 0x8, 1 },
-	{ 0x9E70, 0x1, 1 },
-	{ 0x9E78, 0x187, 1 },
-	{ 0xF000, 0x810, 1 },
-	{ 0xFC00, 0x3, 0 },
-	{ 0x50E, 0x0, 1 },
-	{ 0x50F, 0x0, 0 },
-	{ 0x510, 0x0, 1 },
-	{ 0x0, 0x4F9, 0 },
-	{ 0x501, 0xA, 0 },
-	{ 0x511, 0x44, 0 },
-	{ 0xE00, 0x1, 1 },
-	{ 0xE03, 0xB, 1 },
-	{ 0x8E00, 0x0, 1 },
-	{ 0x8E50, 0xF, 1 },
-	{ 0xBE02, 0x0, 1 },
-	{ 0xBE20, 0x11F3, 1 },
-	{ 0x800, 0x82, 1 },
-	{ 0x8A0, 0x8, 1 },
-	{ 0x8AB, 0x19, 1 },
-	{ 0x900, 0x4D, 1 },
-	{ 0x98D, 0x76, 1 },
-	{ 0x8D0, 0x23, 0 },
-	{ 0x980, 0x4, 0 },
-	{ 0xA630, 0x0, 1 },
-	{ 0x1b400, 0x1fff, 1 },
 };
 
 /* IFPC & Preemption static powerup restore list */

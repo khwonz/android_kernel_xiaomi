@@ -19,21 +19,21 @@ done
 [[ -z ${ZIP} ]] && { echo "${bold}LOADING-_-....${normal}"; }
 
 DEFCONFIG="vince_defconfig"
-export KBUILD_BUILD_USER=Rsyd58
+export KBUILD_BUILD_USER=Rsyd58×Furina
 export TZ=Asia/Jakarta
-export KBUILD_BUILD_HOST=Azure
-export VER="V4.5.12.0.QEGIDXM"
+export KBUILD_BUILD_HOST=android-build
+#export VER="V4.6.12.0.QEGIDXM"
 export KERNELDIR="/workspace/Rsyd58/krnlv"
 export USE_CCACHE=1
 export CCACHE_DIR="workspace/Rsyd58/.ccache"
-export KERNELNAME="FurinaKernel"
+export KERNELNAME="Furina"
 export SRCDIR="${KERNELDIR}"
 export OUTDIR="${KERNELDIR}/out"
 export ANYKERNEL="${KERNELDIR}/AnyKernel3"
 export DEFCONFIG="vince_defconfig"
 export ZIP_DIR="${KERNELDIR}/files"
 export IMAGE="${OUTDIR}/arch/arm64/boot/Image.gz-dtb"
-export ZIPNAME="${KERNELNAME}-vince-$(date +%m%d-%H%M%S)-${VER}.zip"
+export ZIPNAME="${KERNELNAME}-vince-$(date +%m%d-%H%M%S).zip"
 export FINAL_ZIP="${ZIP_DIR}/${ZIPNAME}"
 TC_DIR="/workspace/azure-clang"
 export PATH="$TC_DIR/bin:$PATH"
@@ -50,7 +50,7 @@ fi
 
 mkdir -p out
 make O=out ARCH=arm64 $DEFCONFIG 
-export LOCALVERSION="-フリーナ-${VER}"
+# export LOCALVERSION="-フリーナ-${VER}"
 make -j$(nproc --all) O=out ARCH=arm64  CC=clang HOSTCC=clang HOSTCXX=clang++ READELF=llvm-readelf HOSTAR=llvm-ar AR=llvm-ar AS=llvm-as NM=llvm-nm OBJCOPY=llvm-objcopy OBJDUMP=llvm-objdump STRIP=llvm-strip CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi-  2>&1 | tee log.txt
 #make -j$(nproc --all) O=out ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- 2>&1 | tee log.txt
     echo -e "==========================="

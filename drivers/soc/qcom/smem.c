@@ -313,6 +313,7 @@ static int qcom_smem_alloc_private(struct qcom_smem *smem,
 				   size_t size)
 {
 	struct smem_private_entry *hdr, *end;
+	struct smem_private_entry *next_hdr;
 	struct smem_partition_header *phdr;
 	size_t alloc_size;
 	void *cached;
@@ -329,7 +330,7 @@ static int qcom_smem_alloc_private(struct qcom_smem *smem,
 						cached > p_end))
 		return -EINVAL;
 
-	while (hdr < end) {
+	while ((hdr < end) && ((hdr + 1) < end)) {
 		if (hdr->canary != SMEM_PRIVATE_CANARY) {
 			dev_err(smem->dev,
 				"Found invalid canary in host %d:%d partition\n",
@@ -340,9 +341,15 @@ static int qcom_smem_alloc_private(struct qcom_smem *smem,
 		if (le16_to_cpu(hdr->item) == item)
 			return -EEXIST;
 
-		hdr = private_entry_next(hdr);
+		next_hdr = private_entry_next(hdr);
+
+		if (WARN_ON(next_hdr <= hdr))
+			return -EINVAL;
+
+		hdr = next_hdr;
 	}
-	if (WARN_ON((void *)hdr > p_end))
+
+	if (WARN_ON((void *)hdr > (void *)end))
 		return -EINVAL;
 
 	/* Check that we don't grow into the cached region */
@@ -497,8 +504,10 @@ static void *qcom_smem_get_private(struct qcom_smem *smem,
 {
 
 	struct smem_partition_header *phdr;
-	struct smem_private_entry *e, *uncached_end, *cached_end;
+	struct smem_private_entry *e, *end;
+	struct smem_private_entry *next_e;
 	void *item_ptr, *p_end;
+	size_t entry_size = 0;
 	u32 partition_size;
 	u32 padding_data;
 	u32 e_size;
@@ -515,10 +524,13 @@ static void *qcom_smem_get_private(struct qcom_smem *smem,
 					|| (void *)cached_end > p_end))
 		return ERR_PTR(-EINVAL);
 
-
-	while ((e < uncached_end) && ((e + 1) < uncached_end)) {
-		if (e->canary != SMEM_PRIVATE_CANARY)
-			goto invalid_canary;
+	while ((e < end) && ((e + 1) < end)) {
+		if (e->canary != SMEM_PRIVATE_CANARY) {
+			dev_err(smem->dev,
+				"Found invalid canary in host %d:%d partition\n",
+				phdr->host0, phdr->host1);
+			return ERR_PTR(-EINVAL);
+		}
 
 		if (le16_to_cpu(e->item) == item) {
 			e_size = le32_to_cpu(e->size);
@@ -527,12 +539,13 @@ static void *qcom_smem_get_private(struct qcom_smem *smem,
 			if (e_size < partition_size && padding_data < e_size)
 				entry_size = e_size - padding_data;
 			else
+
 				return ERR_PTR(-EINVAL);
 
-			item_ptr =  entry_to_item(e);
+			item_ptr = entry_to_item(e);
 
-			if (WARN_ON(!IN_PARTITION_RANGE(item_ptr, entry_size, e,
-								uncached_end)))
+			if (WARN_ON(!IN_PARTITION_RANGE(item_ptr, entry_size,
+								    e, end)))
 				return ERR_PTR(-EINVAL);
 
 			if (size != NULL)
@@ -541,7 +554,11 @@ static void *qcom_smem_get_private(struct qcom_smem *smem,
 			return item_ptr;
 		}
 
-		e = private_entry_next(e);
+		next_e = private_entry_next(e);
+		if (WARN_ON(next_e <= e))
+			return ERR_PTR(-EINVAL);
+
+		e = next_e;
 	}
 	if (WARN_ON((void *)e > p_end))
 		return ERR_PTR(-EINVAL);

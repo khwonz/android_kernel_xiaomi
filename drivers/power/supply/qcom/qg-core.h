@@ -141,7 +141,6 @@ struct qpnp_qg {
 	ktime_t			last_user_update_time;
 	ktime_t			last_fifo_update_time;
 	unsigned long		last_maint_soc_update_time;
-	unsigned long		suspend_time;
 
 	/* soc params */
 	int			catch_up_soc;

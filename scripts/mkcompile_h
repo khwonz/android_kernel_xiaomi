@@ -49,10 +49,10 @@ else
 	LINUX_COMPILE_HOST=$KBUILD_BUILD_HOST
 fi
 
-UTS_VERSION="#$VERSION"
-CONFIG_FLAGS="Just Enjoy"
-if [ -n "$SMP" ] ; then CONFIG_FLAGS="Just Enjoy SMP"; fi
-if [ -n "$PREEMPT" ] ; then CONFIG_FLAGS="$CONFIG_FLAGS PREEMPT"; fi
+UTS_VERSION=""
+CONFIG_FLAGS=""
+if [ -n "$SMP" ] ; then CONFIG_FLAGS="| Just Enjoy Whats"; fi
+if [ -n "$PREEMPT" ] ; then CONFIG_FLAGS="$CONFIG_FLAGS There |"; fi
 UTS_VERSION="$UTS_VERSION $CONFIG_FLAGS $TIMESTAMP"
 
 # Truncate to maximum length

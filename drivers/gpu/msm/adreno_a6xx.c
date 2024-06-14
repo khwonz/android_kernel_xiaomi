@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 /* Copyright (c) 2017-2018,2020-2021, The Linux Foundation. All rights reserved.
+=======
+/* Copyright (c) 2017-2018,2020 The Linux Foundation. All rights reserved.
+>>>>>>> cc74e43f8ca386888529d954fc6180838c77a689
  * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify

@@ -1,5 +1,9 @@
 /* Copyright (c) 2016-2017, The Linux Foundation. All rights reserved.
+<<<<<<< HEAD
  * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
+=======
+ * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+>>>>>>> cc74e43f8ca386888529d954fc6180838c77a689
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -93,7 +97,11 @@ _kgsl_pool_add_page(struct kgsl_page_pool *pool, struct page *p)
 		return;
 	}
 
+<<<<<<< HEAD
 	_kgsl_pool_zero_page(p, pool->pool_order);
+=======
+	 _kgsl_pool_zero_page(p, pool->pool_order);
+>>>>>>> cc74e43f8ca386888529d954fc6180838c77a689
 
 	spin_lock(&pool->list_lock);
 	list_add_tail(&p->lru, &pool->page_list);

@@ -1,5 +1,9 @@
 /* Copyright (c) 2008-2021, The Linux Foundation. All rights reserved.
+<<<<<<< HEAD
  * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
+=======
+ * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+>>>>>>> cc74e43f8ca386888529d954fc6180838c77a689
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and

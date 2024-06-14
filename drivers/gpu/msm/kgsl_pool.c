@@ -97,11 +97,7 @@ _kgsl_pool_add_page(struct kgsl_page_pool *pool, struct page *p)
 		return;
 	}
 
-<<<<<<< HEAD
-	_kgsl_pool_zero_page(p, pool->pool_order);
-=======
 	 _kgsl_pool_zero_page(p, pool->pool_order);
->>>>>>> cc74e43f8ca386888529d954fc6180838c77a689
 
 	spin_lock(&pool->list_lock);
 	list_add_tail(&p->lru, &pool->page_list);
